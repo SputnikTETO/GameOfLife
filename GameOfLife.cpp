@@ -1,3 +1,4 @@
+// Including dependencies
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -5,10 +6,13 @@
 #include <thread>
 #include <chrono>
 
+// Matrix for grid [Y][X]
 std::string matrix[20][100];
+
 
 std::string aliveCell(int cellX, int cellY) {
     int sum = 0;
+    // Scanning cells around it
     for (int y = cellY - 1; y <= cellY + 1; ++y) {
         if (y < 0 || y >= 20) {
             continue;
@@ -25,6 +29,7 @@ std::string aliveCell(int cellX, int cellY) {
             }
         }
     }
+    // Return what state the cell should be
     if (sum <= 1) {
         return " ";
     }
@@ -39,6 +44,7 @@ std::string aliveCell(int cellX, int cellY) {
 
 std::string deadCell(int cellX, int cellY) {
     int sum = 0;
+    // Scanning cells around it
     for (int y = cellY - 1; y <= cellY + 1; ++y) {
         if (y < 0 || y >= 20) {
             continue;
@@ -55,6 +61,7 @@ std::string deadCell(int cellX, int cellY) {
             }
         }
     }
+    // Return what state the cell should be
     if (sum >= 3) {
         return "#";
     } else {
@@ -64,6 +71,7 @@ std::string deadCell(int cellX, int cellY) {
 
 int main()
 {   
+    // Creating random alive / dead cells
     srand(time(0));
     for (int r = 0; r < 20; r++) {
         for (int i = 0; i < 100; i++) {
@@ -74,8 +82,10 @@ int main()
             }
         }
     }   
+    // Game loop
     while (true) {
         std::cout << "John Conways game of life" << std::endl;
+        // Updating cells
         for (int r = 0; r < 20; r++) {
             for (int i = 0; i < 100; i++) {
                 if (matrix[r][i] == " ") {
@@ -86,6 +96,7 @@ int main()
                 }
             }
         }
+        // Printing cells
         for (int r = 0; r < 20; r++) {
             for (int i = 0; i < 100; i++) {
                 std::cout << matrix[r][i];
@@ -95,5 +106,4 @@ int main()
         std::this_thread::sleep_for(std::chrono::seconds(1));
         system("cls");
     }
-    std::cin.get();
 }
